@@ -8,6 +8,8 @@
 * Python 3.x
 * Twython
 * Twitter开发者账号 / Twitter開発者アカウント / twitter developer acount
+* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+* http://developer.twitter.com
 
 # Guide
 ## Step 1
