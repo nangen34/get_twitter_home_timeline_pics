@@ -9,20 +9,20 @@ import urllib
 from twython import Twython
 
 # 从config.py中获取文件保存目录
+# config.pyから画像の保存パスを取得します
 # Get file save path from config.py
 IMAGES_DIR = config.PATH
 # 从config.py中获取定时器的时间间隔
+# config.pyから自動実行間隔を取得します
 # Get the timer interval from config.py
 TIMER = config.TIMER
 # 从config.py中获取Twitter认证信息
+# config.pyからTwitter APIの認証情報を取得します
 # Get your Twitter key or token etc
 CK = config.CONSUMER_KEY
 CS = config.CONSUMER_SECRET
 ATK = config.ACCESS_TOKEN
 ATS = config.ACCESS_TOKEN_SECRET
-
-# NUM_PAGES = 5
-# TWEET_PER_PAGE = 200
 
 name_list = []
 
@@ -31,7 +31,6 @@ class TwitterImageDownloader(object):
     def __init__(self):
         super(TwitterImageDownloader, self).__init__()
         self.twitter = Twython(app_key=CK, app_secret=CS, oauth_token=ATK, oauth_token_secret=ATS)
-
 
     # def read_ids(self):
     #     ids_all = [line.replace('@', '') for line in SCREEN_NAMES.splitlines() if line]
@@ -48,6 +47,8 @@ class TwitterImageDownloader(object):
             print("timeline get error ", e)
         else:
             for result in tw_result:
+                # 判断推文中是否包含图片
+                # ツイートの中に画像があるかどうかを判断する
                 # if tweet contain a picture, get it.
                 if 'extended_entities' in result:
                     media = result['extended_entities']['media']
@@ -57,6 +58,8 @@ class TwitterImageDownloader(object):
                         url_list_multi.append(url['media_url'])
                     url_listx.append(url_list_multi)
 
+                    # 判断是否为转推（以便获取真实作者的Twitter ID）
+                    # リツイートであるかどうかを判断する（本当の作者のTwitter IDを取得するため）
                     # judge if the tweet is RT or not so we can get the correct twitter id.
                     if 'retweeted_status' in result:
                         # print("yes rt")
@@ -79,6 +82,7 @@ class TwitterImageDownloader(object):
             print
             'cannot make dir', e
         # 获取文件列表 以便判断是否有重复图片
+        # 重複した画像があるかどうかを判断するためにファイルのリストを取得する
         # Get a list of files to determine if there are duplicate images
         file_list = os.listdir(save_dir)
         return file_list
@@ -88,19 +92,23 @@ class TwitterImageDownloader(object):
         for i in range(len(url)):
             url_real = url[i]
 
-            # 截取图片文件名 例如：https://pbs.twimg.com/media/D3uPR1cU0AAuOW9.jpg
-            #———————————————————————————こ↑こ↓————
-            # get file name of pics. For example：https://pbs.twimg.com/media/D3uPR1cU0AAuOW9.jpg
-            # ——————————————————————————— ↑____this part____↑
+            # 截取图片文件名 例如：https://pbs.twimg.com/media/   D3uPR1cU0AAuOW9.jpg
+            #—————————————————————————————こ↑こ↓————
+            # 画像のファイル名を取得する ：https://pbs.twimg.com/media/   D3uPR1cU0AAuOW9.jpg
+            # ————————————————————————————————こ↑こ↓———
+            # get file name of pics. For example：https://pbs.twimg.com/media/   D3uPR1cU0AAuOW9.jpg
+            # —————————————————————————————————↑____this part____↑
             file_name_judge = url_real[url_real.rfind('/') + 1:]
 
-            #拼接成储存用的最终文件名 例如00unit(作者名)______D3rIFukUIAA7EwF.jpg(文件名)
-            #Create the final file name. For example:00unit(twitter id)______D3rIFukUIAA7EwF.jpg(file names of pics)
+            # 拼接成储存用的最终文件名 例如：00unit(作者名)______D3rIFukUIAA7EwF.jpg(文件名)
+            # 最終的に使うファイル名を合成する　例；00unit(作者)______D3rIFukUIAA7EwF.jpg(ファイル名)
+            # Create the final file name. For example:00unit(twitter id)______D3rIFukUIAA7EwF.jpg(file names of pics)
             file_name = name_listx[j] + "______" + file_name_judge
             url_large = '%s:large' % (url_real)
 
-            #判断图片是否重复
-            #determine if there are duplicate images
+            # 判断图片是否重复
+            # 画像が重複したかどうかを判断する
+            # determine if there are duplicate images
             result = None
             for i in file_list:
                 result = re.search(file_name_judge, i)
@@ -127,8 +135,9 @@ class TwitterImageDownloader(object):
             else:
                 print("file already exists.  skip", file_name)
 
-    #下载图片
-    #download pics
+    # 下载图片
+    # 画像をダウンロード
+    # download pics
     def download(self):
         save_dir = os.path.join(IMAGES_DIR)
         file_list = self.create_folder(save_dir)
@@ -144,7 +153,9 @@ def main():
     tw.download()
     print("finished")
 
-    #定时器
+    # 定时器
+    # タイマー
+    # Timer
     global timer
     timer = threading.Timer(TIMER, main)
     timer.start()
