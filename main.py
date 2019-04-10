@@ -125,7 +125,7 @@ class TwitterImageDownloader(object):
                     img.close()
                     # time.sleep(0.5)
             else:
-                print("file already exists. skip", file_name)
+                print("file already exists.  skip", file_name)
 
     #下载图片
     #download pics
