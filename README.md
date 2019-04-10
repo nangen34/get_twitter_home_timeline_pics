@@ -22,9 +22,13 @@
 * Executing the main.py. Images will be automatically saved to the specified directory
 * main.pyを実行すると画像が指定されたフォルダに保存されます
 
+*![Step2](https://github.com/nangen34/get_twitter_home_timeline_pics/blob/master/image/step2.png)
+
 ## Step 3
 * 执行get_twitter_page.py 图片的作者的Twitter主页将自动被打开
 * get_twitter_page.py画像を実行すると作者のTwitterホームページが自動的に開きます
 * executes the get_twitter_page.py. The author's Twitter homepage image will be automatically opened.
+
+*![Step1](https://github.com/nangen34/get_twitter_home_timeline_pics/blob/master/image/step3.png)
 
 # Next
