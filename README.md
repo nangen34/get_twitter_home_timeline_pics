@@ -14,6 +14,7 @@
 * 编辑config.py中的必要信息（Twitter API 秘钥 / 图片保存路径 / 自动执行间隔 / 浏览器所在路径）
 * config.pyの必要な情報を編集（Twitter APIの認証情報 / 画像保存パス / 自動実行間隔 / ブラウザのパス）
 * Edit the necessary information in config.py(Twitter API twitter authentication information / image save path / auto-execution interval / path to the browser you are using)
+!https://github.com/nangen34/get_twitter_home_timeline_pics/blob/master/image/step1.png
 
 ## Step 2
 * 执行main.py 图片将被自动保存至指定目录
